@@ -10,7 +10,7 @@ const Tab3: React.FC = () => {
           <IonTitle>Tab 3</IonTitle>
         </IonToolbar>
       </IonHeader>
-      <IonContent fullscreen>
+      <IonContent fullscreen className="main-content">
         <IonHeader collapse="condense">
           <IonToolbar>
             <IonTitle size="large">Tab 3</IonTitle>
