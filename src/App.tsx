@@ -10,10 +10,10 @@ import {
   setupIonicReact,
 } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
-import { ellipse, square, triangle } from 'ionicons/icons';
-import Tab1 from './pages/Tab1';
-import Tab2 from './pages/Tab2';
-import Tab3 from './pages/Tab3';
+import { calendar, cloud, sunny } from 'ionicons/icons';
+import CurrentWeather from './pages/CurrentWeather';
+import Forecast from './pages/Forecast';
+import UVIndex from './pages/UVIndex';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -42,31 +42,31 @@ const App: React.FC = () => (
     <IonReactRouter>
       <IonTabs>
         <IonRouterOutlet>
-          <Route exact path="/tab1">
-            <Tab1 />
+          <Route exact path="/current-weather">
+            <CurrentWeather />
           </Route>
-          <Route exact path="/tab2">
-            <Tab2 />
+          <Route exact path="/forecast">
+            <Forecast />
           </Route>
-          <Route path="/tab3">
-            <Tab3 />
+          <Route path="/uv-index">
+            <UVIndex />
           </Route>
           <Route exact path="/">
-            <Redirect to="/tab1" />
+            <Redirect to="/current-weather" />
           </Route>
         </IonRouterOutlet>
         <IonTabBar slot="bottom" color="primary">
-          <IonTabButton tab="tab1" href="/tab1">
-            <IonIcon icon={triangle} />
-            <IonLabel>Tab 1</IonLabel>
+          <IonTabButton tab="current-weather" href="/current-weather">
+            <IonIcon icon={sunny} />
+            <IonLabel>Current Weather</IonLabel>
           </IonTabButton>
-          <IonTabButton tab="tab2" href="/tab2">
-            <IonIcon icon={ellipse} />
-            <IonLabel>Tab 2</IonLabel>
+          <IonTabButton tab="forecast" href="/forecast">
+            <IonIcon icon={calendar} />
+            <IonLabel>Forecast</IonLabel>
           </IonTabButton>
-          <IonTabButton tab="tab3" href="/tab3">
-            <IonIcon icon={square} />
-            <IonLabel>Tab 3</IonLabel>
+          <IonTabButton tab="uv-index" href="/uv-index">
+            <IonIcon icon={cloud} />
+            <IonLabel>UV Index</IonLabel>
           </IonTabButton>
         </IonTabBar>
       </IonTabs>

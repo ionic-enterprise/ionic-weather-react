@@ -1,25 +1,25 @@
 import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react';
 import ExploreContainer from '../components/ExploreContainer';
-import './Tab2.css';
+import './UVIndex.css';
 
-const Tab2: React.FC = () => {
+const UVIndex: React.FC = () => {
   return (
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <IonTitle>Tab 2</IonTitle>
+          <IonTitle>UV Index</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen className="main-content">
         <IonHeader collapse="condense">
           <IonToolbar>
-            <IonTitle size="large">Tab 2</IonTitle>
+            <IonTitle size="large">UV Index</IonTitle>
           </IonToolbar>
         </IonHeader>
-        <ExploreContainer name="Tab 2 page" />
+        <ExploreContainer name="UV Index page" />
       </IonContent>
     </IonPage>
   );
 };
 
-export default Tab2;
+export default UVIndex;
