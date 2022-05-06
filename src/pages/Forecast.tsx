@@ -3,7 +3,7 @@ import { useWeatherService } from '../hooks/useWeatherService';
 import './Forecast.css';
 
 const Forecast: React.FC = () => {
-  const { currentWeatherData } = useWeatherService();
+  const { weatherData } = useWeatherService();
   return (
     <IonPage>
       <IonHeader>
@@ -17,7 +17,7 @@ const Forecast: React.FC = () => {
             <IonTitle size="large">Forecast</IonTitle>
           </IonToolbar>
         </IonHeader>
-        <pre>{JSON.stringify(currentWeatherData, null, 2)}</pre>
+        <pre>{JSON.stringify(weatherData, null, 2)}</pre>
       </IonContent>
     </IonPage>
   );

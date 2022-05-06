@@ -3,7 +3,7 @@ import { useWeatherService } from '../hooks/useWeatherService';
 import './UVIndex.css';
 
 const UVIndex: React.FC = () => {
-  const { currentWeatherData } = useWeatherService();
+  const { weatherData } = useWeatherService();
   return (
     <IonPage>
       <IonHeader>
@@ -17,7 +17,7 @@ const UVIndex: React.FC = () => {
             <IonTitle size="large">UV Index</IonTitle>
           </IonToolbar>
         </IonHeader>
-        <pre>{JSON.stringify(currentWeatherData, null, 2)}</pre>
+        <pre>{JSON.stringify(weatherData, null, 2)}</pre>
       </IonContent>
     </IonPage>
   );

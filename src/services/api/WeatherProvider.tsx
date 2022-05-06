@@ -1,10 +1,11 @@
 import React, { createContext, useCallback, useEffect, useState } from 'react';
 import axios from 'axios';
-import { CurrentWeather, Forecast } from '../models';
+import { CurrentWeather, Forecast, IconMap } from '../models';
 import keys from './keys.json';
 
 export interface WeatherService {
-  currentWeatherData: CurrentWeather | undefined;
+  weatherData: CurrentWeather | undefined;
+  icons: IconMap;
 }
 
 export const WeatherContext = createContext<WeatherService | undefined>(undefined);
@@ -19,6 +20,18 @@ const client = axios.create({
 
 const WeatherProvider: React.FC = ({ children }) => {
   const [weatherData, setWeatherData] = useState<CurrentWeather | undefined>();
+
+  const icons: IconMap = {
+    sunny: 'assets/images/sunny.png',
+    cloudy: 'assets/images/cloudy.png',
+    lightRain: 'assets/images/light-rain.png',
+    shower: 'assets/images/shower.png',
+    sunnyThunderStorm: 'assets/images/partial-tstorm.png',
+    thunderStorm: 'assets/images/tstorm.png',
+    fog: 'assets/images/fog.png',
+    snow: 'assets/images/snow.png',
+    unknown: 'assets/images/dunno.png',
+  };
 
   const getData = useCallback(async (): Promise<any> => {
     const res = await client.get(
@@ -86,7 +99,7 @@ const WeatherProvider: React.FC = ({ children }) => {
     setInterval(refresh, 1000 * 60 * 5);
   }, [refresh]);
 
-  return <WeatherContext.Provider value={{ currentWeatherData: weatherData }}>{children}</WeatherContext.Provider>;
+  return <WeatherContext.Provider value={{ weatherData, icons }}>{children}</WeatherContext.Provider>;
 };
 
 export default WeatherProvider;

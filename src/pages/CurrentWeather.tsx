@@ -1,9 +1,12 @@
 import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react';
 import { useWeatherService } from '../hooks/useWeatherService';
 import './CurrentWeather.css';
+import { CsdemoCondition, CsdemoTemperature } from '@ionic-enterprise/cs-demo-weather-widgets-react';
+import { useState } from 'react';
 
 const CurrentWeather: React.FC = () => {
-  const { currentWeatherData } = useWeatherService();
+  const [scale, setScale] = useState('F');
+  const { weatherData, icons } = useWeatherService();
 
   return (
     <IonPage>
@@ -12,13 +15,16 @@ const CurrentWeather: React.FC = () => {
           <IonTitle>Current Weather</IonTitle>
         </IonToolbar>
       </IonHeader>
-      <IonContent fullscreen className="main-content">
-        <IonHeader collapse="condense">
-          <IonToolbar>
-            <IonTitle size="large">Current Weather</IonTitle>
-          </IonToolbar>
-        </IonHeader>
-        <pre>{JSON.stringify(currentWeatherData, null, 2)}</pre>
+      <IonContent fullscreen className="ion-text-center ion-padding main-content">
+        <div className="primary-value">Madison, WI</div>
+        <CsdemoTemperature
+          className="primary-value"
+          scale={scale}
+          temperature={weatherData?.temperature}
+          onClick={() => setScale(scale === 'F' ? 'C' : 'F')}
+          style={{ display: 'block' }}
+        />
+        <CsdemoCondition condition={weatherData?.condition} iconPaths={icons} />
       </IonContent>
     </IonPage>
   );
