@@ -1,8 +1,9 @@
 import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react';
-import ExploreContainer from '../components/ExploreContainer';
+import { useWeatherService } from '../hooks/useWeatherService';
 import './Forecast.css';
 
 const Forecast: React.FC = () => {
+  const { currentWeatherData } = useWeatherService();
   return (
     <IonPage>
       <IonHeader>
@@ -16,7 +17,7 @@ const Forecast: React.FC = () => {
             <IonTitle size="large">Forecast</IonTitle>
           </IonToolbar>
         </IonHeader>
-        <ExploreContainer name="Forecast page" />
+        <pre>{JSON.stringify(currentWeatherData, null, 2)}</pre>
       </IonContent>
     </IonPage>
   );

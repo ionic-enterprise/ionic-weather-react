@@ -1,8 +1,9 @@
 import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react';
-import ExploreContainer from '../components/ExploreContainer';
+import { useWeatherService } from '../hooks/useWeatherService';
 import './UVIndex.css';
 
 const UVIndex: React.FC = () => {
+  const { currentWeatherData } = useWeatherService();
   return (
     <IonPage>
       <IonHeader>
@@ -16,7 +17,7 @@ const UVIndex: React.FC = () => {
             <IonTitle size="large">UV Index</IonTitle>
           </IonToolbar>
         </IonHeader>
-        <ExploreContainer name="UV Index page" />
+        <pre>{JSON.stringify(currentWeatherData, null, 2)}</pre>
       </IonContent>
     </IonPage>
   );
