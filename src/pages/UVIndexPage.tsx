@@ -1,9 +1,19 @@
+import { CsdemoUvIndex } from '@ionic-enterprise/cs-demo-weather-widgets-react';
 import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react';
+import { useEffect, useState } from 'react';
 import { useWeatherService } from '../hooks/useWeatherService';
 import './UVIndexPage.css';
 
 const UVIndexPage: React.FC = () => {
-  const { weatherData } = useWeatherService();
+  const { weatherData, getUVAdvice } = useWeatherService();
+  const [advice, setAdvice] = useState<string>('');
+
+  useEffect(() => {
+    if (weatherData) {
+      setAdvice(getUVAdvice(weatherData.uvIndex));
+    }
+  }, [weatherData, getUVAdvice]);
+
   return (
     <IonPage>
       <IonHeader>
@@ -11,13 +21,9 @@ const UVIndexPage: React.FC = () => {
           <IonTitle>UV Index</IonTitle>
         </IonToolbar>
       </IonHeader>
-      <IonContent fullscreen className="main-content">
-        <IonHeader collapse="condense">
-          <IonToolbar>
-            <IonTitle size="large">UV Index</IonTitle>
-          </IonToolbar>
-        </IonHeader>
-        <pre>{JSON.stringify(weatherData, null, 2)}</pre>
+      <IonContent fullscreen className="ion-text-center ion-padding main-content">
+        <CsdemoUvIndex class="primary-value" uvIndex={weatherData?.uvIndex} />
+        <div className="description">{advice}</div>
       </IonContent>
     </IonPage>
   );

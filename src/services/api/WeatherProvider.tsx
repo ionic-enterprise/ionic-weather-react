@@ -6,6 +6,7 @@ import keys from './keys.json';
 export interface WeatherService {
   weatherData: CurrentWeather | undefined;
   icons: IconMap;
+  getUVAdvice: (uvIndex: number) => string;
 }
 
 export const WeatherContext = createContext<WeatherService | undefined>(undefined);
@@ -20,6 +21,46 @@ const client = axios.create({
 
 const WeatherProvider: React.FC = ({ children }) => {
   const [weatherData, setWeatherData] = useState<CurrentWeather | undefined>();
+
+  const getUVAdvice = (uvIndex: number): string => {
+    const risk = riskLevel(uvIndex);
+    return [
+      'Wear sunglasses on bright days. If you burn easily, cover up and use broad spectrum SPF 30+ sunscreen. ' +
+        'Bright surfaces, such as sand, water and snow, will increase UV exposure.',
+      'Stay in the shade near midday when the sun is strongest. If outdoors, wear sun protective clothing, ' +
+        'a wide-brimmed hat, and UV-blocking sunglasses. Generously apply broad spectrum SPF 30+ sunscreen every ' +
+        '2 hours, even on cloudy days, and after swimming or sweating. Bright surfaces, such as sand, water and ' +
+        'snow, will increase UV exposure.',
+      'Reduce time in the sun between 10 a.m. and 4 p.m. If outdoors, seek shade and wear sun protective clothing, ' +
+        'a wide-brimmed hat, and UV-blocking sunglasses. Generously apply broad spectrum SPF 30+ sunscreen every 2 ' +
+        'hours, even on cloudy days, and after swimming or sweating. Bright surfaces, such sand, water and snow, will ' +
+        'increase UV exposure.',
+      'Minimize sun exposure between 10 a.m. and 4 p.m. If outdoors, seek shade and wear sun protective clothing, ' +
+        'a wide-brimmed hat, and UV-blocking sunglasses. Generously apply broad spectrum SPF 30+ sunscreen every 2 ' +
+        'hours, even on cloudy days, and after swimming or sweating. Bright surfaces, such as sand, water and snow, ' +
+        'will increase UV exposure.',
+      'Try to avoid sun exposure between 10 a.m. and 4 p.m. If outdoors, seek shade and wear sun protective clothing, ' +
+        'a wide-brimmed hat, and UV-blocking sunglasses. Generously apply broad spectrum SPF 30+ sunscreen every ' +
+        '2 hours, even on cloudy days, and after swimming or sweating. Bright surfaces, such as sand, water and snow, ' +
+        'will increase UV exposure.',
+    ][risk];
+  };
+
+  const riskLevel = useCallback((value: number): number => {
+    if (value < 3) {
+      return 0;
+    }
+    if (value < 6) {
+      return 1;
+    }
+    if (value < 8) {
+      return 2;
+    }
+    if (value < 11) {
+      return 3;
+    }
+    return 4;
+  }, []);
 
   const icons: IconMap = {
     sunny: 'assets/images/sunny.png',
@@ -59,33 +100,16 @@ const WeatherProvider: React.FC = ({ children }) => {
     return result;
   }, []);
 
-  const riskLevel = useCallback((value: number): number => {
-    if (value < 3) {
-      return 0;
-    }
-    if (value < 6) {
-      return 1;
-    }
-    if (value < 8) {
-      return 2;
-    }
-    if (value < 11) {
-      return 3;
-    }
-    return 4;
-  }, []);
-
   const convert = useCallback(
     (data: any): CurrentWeather => {
       return {
         condition: data.current.weather[0].id,
         temperature: data.current.temp,
         uvIndex: data.current.uvi,
-        uvRiskIndex: riskLevel(data.current.uvi),
         forecasts: convertForecast(data.daily),
       };
     },
-    [convertForecast, riskLevel]
+    [convertForecast]
   );
 
   const refresh = useCallback(async () => {
@@ -99,7 +123,7 @@ const WeatherProvider: React.FC = ({ children }) => {
     setInterval(refresh, 1000 * 60 * 5);
   }, [refresh]);
 
-  return <WeatherContext.Provider value={{ weatherData, icons }}>{children}</WeatherContext.Provider>;
+  return <WeatherContext.Provider value={{ weatherData, icons, getUVAdvice }}>{children}</WeatherContext.Provider>;
 };
 
 export default WeatherProvider;
