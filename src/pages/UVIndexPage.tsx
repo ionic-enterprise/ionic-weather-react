@@ -15,7 +15,7 @@ const UVIndexPage: React.FC = () => {
   }, [weatherData, getUVAdvice]);
 
   return (
-    <IonPage>
+    <IonPage className="uv-index-page">
       <IonHeader>
         <IonToolbar>
           <IonTitle>UV Index</IonTitle>

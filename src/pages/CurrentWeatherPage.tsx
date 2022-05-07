@@ -1,15 +1,15 @@
+import { CsdemoCondition, CsdemoTemperature } from '@ionic-enterprise/cs-demo-weather-widgets-react';
 import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react';
+import { useState } from 'react';
 import { useWeatherService } from '../hooks/useWeatherService';
 import './CurrentWeatherPage.css';
-import { CsdemoCondition, CsdemoTemperature } from '@ionic-enterprise/cs-demo-weather-widgets-react';
-import { useState } from 'react';
 
 const CurrentWeatherPage: React.FC = () => {
   const [scale, setScale] = useState('F');
   const { weatherData, icons } = useWeatherService();
 
   return (
-    <IonPage>
+    <IonPage className="current-weather-page">
       <IonHeader>
         <IonToolbar>
           <IonTitle>Current Weather</IonTitle>

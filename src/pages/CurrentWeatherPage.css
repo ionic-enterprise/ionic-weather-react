@@ -1,16 +1,16 @@
-.primary-value {
+.current-weather-page .primary-value {
   margin-top: 1em;
 }
 
-.main-content {
+.current-weather-page .main-content {
   --padding-top: 3em;
 }
 
-csdemo-condition {
+.current-weather-page csdemo-condition {
   --csdemo-condition-image-height: 212px;
   --csdemo-condition-label-font-size: 24px;
 }
 
-csdemo-temperature {
+.current-weather-page csdemo-temperature {
   cursor: pointer;
 }

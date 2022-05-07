@@ -1,5 +1,5 @@
-import React, { createContext, useCallback, useEffect, useState } from 'react';
 import axios from 'axios';
+import React, { createContext, useCallback, useEffect, useState } from 'react';
 import { CurrentWeather, Forecast, IconMap } from '../models';
 import keys from './keys.json';
 
