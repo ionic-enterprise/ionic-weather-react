@@ -1,0 +1,6 @@
+{
+  "appId": "io.ionic.ionicweatherreact",
+  "appName": "ionic-weather-react",
+  "webDir": "build",
+  "bundledWebRuntime": false
+}
