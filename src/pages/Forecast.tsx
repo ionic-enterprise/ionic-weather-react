@@ -1,9 +1,13 @@
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react';
+import { IonContent, IonHeader, IonItem, IonLabel, IonList, IonPage, IonTitle, IonToolbar } from '@ionic/react';
+import { useState } from 'react';
 import { useWeatherService } from '../hooks/useWeatherService';
+import { Forecast } from '../services/models';
 import './Forecast.css';
+import { CsdemoDailyForecast } from '@ionic-enterprise/cs-demo-weather-widgets-react';
 
-const Forecast: React.FC = () => {
-  const { weatherData } = useWeatherService();
+const ForecastPage: React.FC = () => {
+  const [scale, setScale] = useState('F');
+  const { weatherData, icons } = useWeatherService();
   return (
     <IonPage>
       <IonHeader>
@@ -12,15 +16,20 @@ const Forecast: React.FC = () => {
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen className="main-content">
-        <IonHeader collapse="condense">
-          <IonToolbar>
-            <IonTitle size="large">Forecast</IonTitle>
-          </IonToolbar>
-        </IonHeader>
-        <pre>{JSON.stringify(weatherData, null, 2)}</pre>
+        <IonList>
+          {weatherData?.forecasts.map((dailyForecast: Array<Forecast>, index: number) => {
+            return (
+              <IonItem key={index} onClick={() => setScale(scale === 'F' ? 'C' : 'F')}>
+                <IonLabel>
+                  <CsdemoDailyForecast scale={scale} forecasts={dailyForecast} iconPaths={icons} />
+                </IonLabel>
+              </IonItem>
+            );
+          })}
+        </IonList>
       </IonContent>
     </IonPage>
   );
 };
 
-export default Forecast;
+export default ForecastPage;
