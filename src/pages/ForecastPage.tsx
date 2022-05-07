@@ -2,7 +2,7 @@ import { IonContent, IonHeader, IonItem, IonLabel, IonList, IonPage, IonTitle, I
 import { useState } from 'react';
 import { useWeatherService } from '../hooks/useWeatherService';
 import { Forecast } from '../services/models';
-import './Forecast.css';
+import './ForecastPage.css';
 import { CsdemoDailyForecast } from '@ionic-enterprise/cs-demo-weather-widgets-react';
 
 const ForecastPage: React.FC = () => {

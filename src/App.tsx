@@ -11,9 +11,9 @@ import {
 } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
 import { calendar, cloud, sunny } from 'ionicons/icons';
-import CurrentWeather from './pages/CurrentWeather';
-import Forecast from './pages/Forecast';
-import UVIndex from './pages/UVIndex';
+import CurrentWeatherPage from './pages/CurrentWeatherPage';
+import ForecastPage from './pages/ForecastPage';
+import UVIndexPage from './pages/UVIndexPage';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -43,13 +43,13 @@ const App: React.FC = () => (
       <IonTabs>
         <IonRouterOutlet>
           <Route exact path="/current-weather">
-            <CurrentWeather />
+            <CurrentWeatherPage />
           </Route>
           <Route exact path="/forecast">
-            <Forecast />
+            <ForecastPage />
           </Route>
           <Route path="/uv-index">
-            <UVIndex />
+            <UVIndexPage />
           </Route>
           <Route exact path="/">
             <Redirect to="/current-weather" />

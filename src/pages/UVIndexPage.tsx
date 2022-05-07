@@ -1,8 +1,8 @@
 import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react';
 import { useWeatherService } from '../hooks/useWeatherService';
-import './UVIndex.css';
+import './UVIndexPage.css';
 
-const UVIndex: React.FC = () => {
+const UVIndexPage: React.FC = () => {
   const { weatherData } = useWeatherService();
   return (
     <IonPage>
@@ -23,4 +23,4 @@ const UVIndex: React.FC = () => {
   );
 };
 
-export default UVIndex;
+export default UVIndexPage;
