@@ -6,7 +6,7 @@ import './CurrentWeatherPage.css';
 
 const CurrentWeatherPage: React.FC = () => {
   const [scale, setScale] = useState('F');
-  const { weatherData, icons } = useWeatherService();
+  const { weatherData } = useWeatherService();
 
   return (
     <IonPage className="current-weather-page">
@@ -24,7 +24,7 @@ const CurrentWeatherPage: React.FC = () => {
           onClick={() => setScale(scale === 'F' ? 'C' : 'F')}
           style={{ display: 'block' }}
         />
-        <CsdemoCondition condition={weatherData?.condition} iconPaths={icons} />
+        <CsdemoCondition condition={weatherData?.condition} />
       </IonContent>
     </IonPage>
   );

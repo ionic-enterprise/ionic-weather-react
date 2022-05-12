@@ -7,7 +7,7 @@ import './ForecastPage.css';
 
 const ForecastPage: React.FC = () => {
   const [scale, setScale] = useState('F');
-  const { weatherData, icons } = useWeatherService();
+  const { weatherData } = useWeatherService();
   return (
     <IonPage className="forecast-page">
       <IonHeader>
@@ -21,7 +21,7 @@ const ForecastPage: React.FC = () => {
             return (
               <IonItem key={index} onClick={() => setScale(scale === 'F' ? 'C' : 'F')}>
                 <IonLabel>
-                  <CsdemoDailyForecast scale={scale} forecasts={dailyForecast} iconPaths={icons} />
+                  <CsdemoDailyForecast scale={scale} forecasts={dailyForecast} />
                 </IonLabel>
               </IonItem>
             );
