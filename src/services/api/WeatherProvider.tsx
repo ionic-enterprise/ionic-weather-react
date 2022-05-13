@@ -100,14 +100,17 @@ const WeatherProvider: React.FC = ({ children }) => {
   );
 
   const refresh = useCallback(async () => {
-    console.log('refreshing...');
     const response = await getData();
     setWeatherData(convert(response));
   }, [getData, convert]);
 
   useEffect(() => {
     refresh();
-    setInterval(refresh, 1000 * 60 * 5);
+    const id = setInterval(refresh, 1000 * 60 * 5);
+
+    return () => {
+      clearInterval(id);
+    };
   }, [refresh]);
 
   return <WeatherContext.Provider value={{ weatherData, getUVAdvice }}>{children}</WeatherContext.Provider>;
