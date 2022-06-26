@@ -17,11 +17,11 @@ const ForecastPage: React.FC = () => {
       </IonHeader>
       <IonContent fullscreen className="main-content">
         <IonList>
-          {weatherData?.forecasts.map((dailyForecast: Array<Forecast>, index: number) => {
+          {weatherData?.forecasts.map((dailyForecast: Forecast, index: number) => {
             return (
               <IonItem key={index} onClick={() => setScale(scale === 'F' ? 'C' : 'F')}>
                 <IonLabel>
-                  <CsdemoDailyForecast scale={scale} forecasts={dailyForecast} />
+                  <CsdemoDailyForecast scale={scale} forecast={dailyForecast} />
                 </IonLabel>
               </IonItem>
             );

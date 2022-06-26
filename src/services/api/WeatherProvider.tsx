@@ -92,21 +92,15 @@ const WeatherProvider: React.FC = ({ children }) => {
     return res.data;
   }, []);
 
-  const convertForecast = useCallback((daily: Array<RawForecast>): Array<Array<Forecast>> => {
-    const result: Array<Array<Forecast>> = [];
+  const convertForecast = useCallback((daily: Array<RawForecast>): Array<Forecast> => {
+    const result: Array<Forecast> = [];
     daily.forEach((day: RawForecast) => {
-      result.push([
-        {
-          date: new Date(day.dt * 1000),
-          condition: day.weather[0].id,
-          temperature: day.temp.min,
-        },
-        {
-          date: new Date(day.dt * 1000),
-          condition: day.weather[0].id,
-          temperature: day.temp.max,
-        },
-      ]);
+      result.push({
+        date: new Date(day.dt * 1000),
+        condition: day.weather[0].id,
+        low: day.temp.min,
+        high: day.temp.max,
+      });
     });
     return result;
   }, []);
