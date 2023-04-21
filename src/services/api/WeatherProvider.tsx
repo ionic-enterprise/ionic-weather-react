@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { createContext, useCallback, useEffect, useState } from 'react';
+import { createContext, ReactNode, useCallback, useEffect, useState } from 'react';
 import { CurrentWeather, Forecast } from '../models';
 import keys from './keys.json';
 
@@ -9,6 +9,7 @@ export interface WeatherService {
 }
 
 export const WeatherContext = createContext<WeatherService | undefined>(undefined);
+type Props = { children?: ReactNode };
 
 interface WeatherCondition {
   id: number;
@@ -42,7 +43,7 @@ const client = axios.create({
   },
 });
 
-const WeatherProvider: React.FC = ({ children }) => {
+const WeatherProvider = ({ children }: Props) => {
   const [weatherData, setWeatherData] = useState<CurrentWeather | undefined>();
 
   const getUVAdvice = (uvIndex: number): string => {
