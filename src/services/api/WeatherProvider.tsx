@@ -17,22 +17,24 @@ interface WeatherCondition {
   description: string;
   icon: string;
 }
-interface RawForecast {
-  dt: number;
-  weather: [WeatherCondition];
-  temp: {
-    min: number;
-    max: number;
-  };
+interface ForecastResponse {
+  list: [
+    {
+      dt: number;
+      weather: [WeatherCondition];
+      main: {
+        temp_min: number;
+        temp_max: number;
+      };
+    },
+  ];
 }
-interface OneCallResponse {
-  current: {
-    dt: number;
+interface WeatherResponse {
+  dt: number;
+  main: {
     temp: number;
-    uvi: number;
-    weather: [WeatherCondition];
   };
-  daily: [RawForecast];
+  weather: [WeatherCondition];
 }
 
 const client = axios.create({
@@ -86,42 +88,46 @@ const WeatherProvider = ({ children }: Props) => {
     return 4;
   }, []);
 
-  const getData = useCallback(async (): Promise<OneCallResponse> => {
-    const res = await client.get(
-      `/onecall?lat=43.074085&lon=-89.381027&exclude=minutely,hourly&appid=${keys.openWeatherMap}`
-    );
+  const getWeather = useCallback(async (): Promise<WeatherResponse> => {
+    const res = await client.get(`/weather?lat=43.074085&lon=-89.381027&appid=${keys.openWeatherMap}`);
     return res.data;
   }, []);
 
-  const convertForecast = useCallback((daily: Array<RawForecast>): Array<Forecast> => {
+  const getForecast = useCallback(async (): Promise<ForecastResponse> => {
+    const res = await client.get(`/forecast?lat=43.074085&lon=-89.381027&appid=${keys.openWeatherMap}`);
+    return res.data;
+  }, []);
+
+  const convertForecast = useCallback((forecast: ForecastResponse): Array<Forecast> => {
     const result: Array<Forecast> = [];
-    daily.forEach((day: RawForecast) => {
+    forecast.list.forEach((day) => {
       result.push({
         date: new Date(day.dt * 1000),
         condition: day.weather[0].id,
-        low: day.temp.min,
-        high: day.temp.max,
+        low: day.main.temp_min,
+        high: day.main.temp_max,
       });
     });
     return result;
   }, []);
 
   const convert = useCallback(
-    (data: OneCallResponse): CurrentWeather => {
+    (weather: WeatherResponse, forecast: ForecastResponse): CurrentWeather => {
       return {
-        condition: data.current.weather[0].id,
-        temperature: data.current.temp,
-        uvIndex: data.current.uvi,
-        forecasts: convertForecast(data.daily),
+        condition: weather.weather[0].id,
+        temperature: weather.main.temp,
+        uvIndex: Math.floor(Math.random() * 14) + 1,
+        forecasts: convertForecast(forecast),
       };
     },
-    [convertForecast]
+    [convertForecast],
   );
 
   const refresh = useCallback(async () => {
-    const response = await getData();
-    setWeatherData(convert(response));
-  }, [getData, convert]);
+    const weather = await getWeather();
+    const forecast = await getForecast();
+    setWeatherData(convert(weather, forecast));
+  }, [getForecast, getWeather, convert]);
 
   useEffect(() => {
     refresh();
