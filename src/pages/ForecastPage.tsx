@@ -16,7 +16,7 @@ const ForecastPage: React.FC = () => {
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen className="main-content">
-        <IonList>
+        <IonList className="transparent">
           {weatherData?.forecasts.map((dailyForecast: Forecast, index: number) => {
             return (
               <IonItem key={index} onClick={() => setScale(scale === 'F' ? 'C' : 'F')}>
