@@ -1,6 +1,5 @@
 {
   "appId": "io.ionic.ionicweatherreact",
   "appName": "ionic-weather-react",
-  "webDir": "dist",
-  "bundledWebRuntime": false
+  "webDir": "dist"
 }
