@@ -1,5 +1,14 @@
 {
   "appId": "io.ionic.ionicweatherreact",
   "appName": "ionic-weather-react",
-  "webDir": "dist"
+  "webDir": "dist",
+  "android": {
+    "adjustMarginsForEdgeToEdge": "auto"
+  },
+  "plugins": {
+    "StatusBar": {
+      "overlaysWebView": false
+    }
+  },
+  "packageClassList": ["AppPlugin", "HapticsPlugin", "KeyboardPlugin", "StatusBarPlugin"]
 }
